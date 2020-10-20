@@ -1,8 +1,0 @@
-{
-  "/_app": "pages/_app.js",
-  "/_document": "pages/_document.js",
-  "/api/jira": "pages/api/jira.js",
-  "/api/toggl": "pages/api/toggl.js",
-  "/start": "pages/start.js",
-  "/_error": "pages/_error.js"
-}
