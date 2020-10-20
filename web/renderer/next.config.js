@@ -1,6 +1,6 @@
 const withCSS = require('@zeit/next-css');
 
-module.exports = withCSS({
+module.exports = {
   webpack(config, options) {
     config.target = 'electron-renderer';
     // console.log('config.module.rules', config.module.rules);
@@ -10,7 +10,7 @@ module.exports = withCSS({
     // });
     return config;
   },
-});
+};
 
 exports.exportPathMap = () => ({
   '/start': { page: '/start' },
