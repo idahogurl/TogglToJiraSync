@@ -1,0 +1,8 @@
+{
+  "plugins": [["babel-plugin-jsx-pragmatic", {
+    "module": "@emotion/core",
+    "export": "jsx",
+    "import": "jsx"
+}],
+["@babel/plugin-transform-react-jsx", { "pragma": "jsx"}]]
+}
