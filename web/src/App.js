@@ -126,10 +126,6 @@ function Entries({ startDate, endDate }) {
           },
           {
             title: 'Duration',
-            dataIndex: 'duration',
-          },
-          {
-            title: 'Display Duration',
             dataIndex: 'durationDisplay',
           },
         ]}
@@ -172,7 +168,7 @@ export default function App() {
 
   return (
     <Container>
-      <h1>Toggl to Jira Sync</h1>
+      <h1>Toggl Tracker to Jira Sync</h1>
       <Form layout="inline" css={{ marginBottom: '3rem' }}>
         <Form.Item label="Date Range">
           <RangePicker onChange={onChange} />
