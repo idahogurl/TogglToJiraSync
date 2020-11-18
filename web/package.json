@@ -1,0 +1,80 @@
+{
+  "name": "toggl-to-jira-sync",
+  "productName": "Toggl to Jira Sync",
+  "description": "Takes time entries from Toggl Task Timer and add them to work log of the corresponding Jira issue.",
+  "version": "1.0.0",
+  "main": "src/electron.js",
+  "license": "MIT",
+  "author": {
+    "name": "Rebecca Vest",
+    "email": "olserebe@hotmail.com",
+    "url": "http://codehouse.dev/"
+  },
+  "scripts": {
+    "react-start": "parcel index.html --out-dir build",
+    "react-build": "parcel build index.html --out-dir build --public-url ./",
+    "electron-build": "electron-builder -mwl",
+    "clean-build": "rm -rf build/ .cache dist/",
+    "build": "yarn clean-build && yarn react-build && yarn electron-build",
+    "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:1234 && electron . --disable-gpu \"",
+    "debug": "DEBUG=1 yarn start"
+  },
+  "browser": {
+    "fs": false
+  },
+  "build": {
+    "appId": "dev.codehouse",
+    "files": [
+      "src/electron.js",
+      "src/settings-store.js",
+      "src/assets/*",
+      "build/**/*"
+    ],
+    "mac": {
+      "target": "dmg",
+      "icon": "src/assets/logo.png"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "src/assets/logo.png"
+    },
+    "linux": {
+      "target": "deb",
+      "icon": "src/assets/logo.png",
+      "category": "Development"
+    }
+  },
+  "homepage": "./",
+  "dependencies": {
+    "antd": "^4.7.3",
+    "base-64": "^1.0.0",
+    "dayjs": "1.8.35",
+    "electron-is-dev": "^1.2.0",
+    "electron-log": "^4.3.0",
+    "electron-store": "^6.0.1",
+    "node-fetch": "^2.6.1",
+    "parcel": "^1.12.4",
+    "querystring": "^0.2.0",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+    "swr": "^0.3.6"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "concurrently": "^5.3.0",
+    "cross-env": "^7.0.2",
+    "electron": "^10.1.4",
+    "electron-builder": "^22.9.1",
+    "eslint": "7.2.0",
+    "eslint-config-airbnb": "18.2.0",
+    "eslint-plugin-import": "^2.21.2",
+    "eslint-plugin-jsx-a11y": "^6.3.0",
+    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-less-js-enabled": "^1.0.2",
+    "parcel-plugin-svg-react": "^1.0.4",
+    "prettier": "^2.1.2",
+    "wait-on": "^5.2.0"
+  }
+}

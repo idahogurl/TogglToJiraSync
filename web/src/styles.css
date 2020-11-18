@@ -1,0 +1,15 @@
+.container {
+    margin: 1em;
+}
+.ant-input-group.input-group {
+    border: 1px solid gainsboro;
+    padding: 1em;
+    margin-bottom: 1em;
+}
+.filter-form {
+    margin-bottom: 3em;
+}
+.settings-icon {
+    width: 16px;
+    height: 16px;
+}
