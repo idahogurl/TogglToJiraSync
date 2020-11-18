@@ -1,13 +1,14 @@
 {
   "name": "toggl-to-jira-sync",
+  "productName": "Toggl to Jira Sync",
   "description": "Takes time entries from Toggl Task Timer and add them to work log of the corresponding Jira issue.",
   "version": "1.0.0",
   "main": "src/electron.js",
   "license": "MIT",
-  "author": { 
-    "name" : "Rebecca Vest",
+  "author": {
+    "name": "Rebecca Vest",
     "email": "olserebe@hotmail.com",
-    "url" : "http://codehouse.dev/"
+    "url": "http://codehouse.dev/"
   },
   "scripts": {
     "react-start": "parcel index.html --out-dir build",
@@ -25,6 +26,7 @@
     "appId": "dev.codehouse",
     "files": [
       "src/electron.js",
+      "src/settings-store.js",
       "src/assets/*",
       "build/**/*"
     ],
@@ -48,6 +50,7 @@
     "base-64": "^1.0.0",
     "dayjs": "1.8.35",
     "electron-is-dev": "^1.2.0",
+    "electron-log": "^4.3.0",
     "electron-store": "^6.0.1",
     "node-fetch": "^2.6.1",
     "parcel": "^1.12.4",

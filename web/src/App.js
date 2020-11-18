@@ -17,6 +17,9 @@ export default function App() {
     ipcRenderer.on('getSettings', (event, settingValues) => {
       setSettingValues(settingValues);
     });
+    window.onerror((e) => {
+      alert(e.message);
+    });
   }, []);
   return (
     <>
