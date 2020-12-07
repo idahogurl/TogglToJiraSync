@@ -1,7 +1,7 @@
 // https://www.npmjs.com/package/electron-json-storage
 import React from 'react';
 import { Result } from 'antd';
-import { SET_STATUS_RESOLVED, SET_STATUS_REJECTED } from './statuses';
+import { SET_STATUS_RESOLVED, SET_STATUS_REJECTED } from '../statuses';
 
 export default function SyncResult(status) {
   if (status === SET_STATUS_RESOLVED) {

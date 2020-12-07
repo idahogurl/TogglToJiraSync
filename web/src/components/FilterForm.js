@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'antd';
-
 import Entries from './Entries';
 import DatePicker from './DatePicker';
 
@@ -9,7 +8,7 @@ const { RangePicker } = DatePicker;
 export default function FilterForm({ settings }) {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
-  const [viewEntries, setViewEntries] = useState(false);
+  const [isInit, setIsInit] = useState(true);
 
   const onChange = (date) => {
     if (date) {
@@ -17,11 +16,10 @@ export default function FilterForm({ settings }) {
       setStartDate(start);
       setEndDate(end);
     }
-    setViewEntries(false);
   };
 
   const onClick = () => {
-    setViewEntries(true);
+    setIsInit(false);
   };
 
   return (
@@ -34,7 +32,7 @@ export default function FilterForm({ settings }) {
           View Entries
         </Button>
       </Form>
-      {viewEntries && <Entries startDate={startDate} endDate={endDate} settings={settings} />}
+      {isInit && <Entries startDate={startDate} endDate={endDate} settings={settings} />}
     </>
   );
 }

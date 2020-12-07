@@ -12,8 +12,9 @@
   },
   "scripts": {
     "react-start": "parcel index.html --out-dir build",
-    "react-build": "parcel build index.html --out-dir build --public-url ./",
-    "electron-build": "electron-builder -mwl",
+    "react-build-dev": "NODE_ENV=development parcel build index.html --out-dir build --public-url ./",
+    "react-build": "NODE_ENV=production parcel build index.html --out-dir build --public-url ./ --no-source-maps --experimental-scope-hoisting",
+    "electron-build": "electron-builder -m",
     "clean-build": "rm -rf build/ .cache dist/",
     "build": "yarn clean-build && yarn react-build && yarn electron-build",
     "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:1234 && electron . --disable-gpu \"",
@@ -23,10 +24,9 @@
     "fs": false
   },
   "build": {
-    "appId": "dev.codehouse",
+    "appId": "dev.rvest",
     "files": [
-      "src/electron.js",
-      "src/settings-store.js",
+      "src/*.js",
       "src/assets/*",
       "build/**/*"
     ],
@@ -49,6 +49,7 @@
     "antd": "^4.7.3",
     "base-64": "^1.0.0",
     "dayjs": "1.8.35",
+    "electron-devtools-installer": "^3.1.1",
     "electron-is-dev": "^1.2.0",
     "electron-log": "^4.3.0",
     "electron-store": "^6.0.1",
