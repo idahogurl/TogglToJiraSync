@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Drawer, Space } from 'antd';
+import {
+  Drawer, Space, Row, Col,
+} from 'antd';
 import FilterForm from './components/FilterForm';
 import SettingsPanel from './components/SettingsPanel';
 import SettingsIcon from './settings.svg';
@@ -26,26 +28,42 @@ export default function App() {
       setSettingValues(LocalStorage.getSettings());
     }
   }, []);
+
+  const column = {
+    backgroundColor: 'gainsboro',
+    padding: 10,
+    border: 1,
+    textAlign: 'center',
+  };
+
   return (
     <>
-      <div className="container">
-        <Space>
-          <img src={logo} alt="App Logo" style={{ width: '64px' }} />
-          <h1>Toggl Tracker to Jira Sync</h1>
-          <button
-            type="button"
-            onClick={() => {
-              if (ipcRenderer) {
-                ipcRenderer.send('getSettings');
-              }
-              setShowSettings(true);
-            }}
-          >
-            <img src={SettingsIcon} alt="Open Settings" className="settings-icon" />
-          </button>
-        </Space>
-        <FilterForm settings={settings} />
-      </div>
+      <Row style={{ marginTop: '1em' }}>
+        <Col span={24} style={column}>
+          <Space>
+            <img src={logo} alt="App Logo" style={{ width: '64px' }} />
+            <h1>Toggl Tracker to Jira Sync</h1>
+            <button
+              type="button"
+              style={{ cursor: 'pointer' }}
+              onClick={() => {
+                if (ipcRenderer) {
+                  ipcRenderer.send('getSettings');
+                }
+                setShowSettings(true);
+              }}
+            >
+              <img src={SettingsIcon} alt="Open Settings" className="settings-icon" />
+            </button>
+          </Space>
+        </Col>
+      </Row>
+      <Row>
+        <Col span={24} style={column}>
+          <FilterForm settings={settings} />
+        </Col>
+      </Row>
+
       <Drawer title="Settings" width={550} closable={false} visible={showSettings}>
         <SettingsPanel
           onClose={() => {
@@ -55,7 +73,7 @@ export default function App() {
             if (ipcRenderer) {
               ipcRenderer.send('saveSettings', values);
             } else {
-              LocalStorage.setSettingValues(values);
+              LocalStorage.setSettings(values);
             }
             setShowSettings(false);
             setSettingValues(values);

@@ -22,17 +22,28 @@ export default function FilterForm({ settings }) {
     setIsInit(false);
   };
 
+  const layout = {
+    labelCol: { span: 8 },
+    wrapperCol: { span: 16 },
+  };
+  const tailLayout = {
+    wrapperCol: { offset: 8, span: 16 },
+  };
+  /* eslint-disable react/jsx-props-no-spreading */
   return (
-    <>
-      <Form layout="inline" className="filter-form">
+    <div style={{ textAlign: 'left' }}>
+      <Form className="filter-form" {...layout}>
         <Form.Item label="Date Range">
           <RangePicker onChange={onChange} />
         </Form.Item>
-        <Button onClick={onClick} disabled={!startDate && !endDate} type="primary">
-          View Entries
-        </Button>
+        <Form.Item {...tailLayout}>
+          <Button onClick={onClick} disabled={!startDate && !endDate} type="primary">
+            View Entries
+          </Button>
+        </Form.Item>
       </Form>
-      {isInit && <Entries startDate={startDate} endDate={endDate} settings={settings} />}
-    </>
+      <Entries isInit={isInit} startDate={startDate} endDate={endDate} settings={settings} />
+    </div>
   );
+  /* eslint-enable react/jsx-props-no-spreading */
 }
