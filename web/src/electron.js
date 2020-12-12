@@ -1,7 +1,9 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const electron = require('electron');
 
-const { app, ipcMain, BrowserWindow } = electron;
+const {
+  app, session, ipcMain, BrowserWindow,
+} = electron;
 
 const path = require('path');
 const isDev = require('electron-is-dev');
@@ -12,7 +14,7 @@ let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 750,
+    width: 580,
     height: 650,
     webPreferences: {
       enableRemoteModule: true,
@@ -24,9 +26,10 @@ function createWindow() {
     isDev ? 'http://localhost:1234' : `file://${path.join(__dirname, '../build/index.html')}`,
   );
 
+  mainWindow.webContents.openDevTools();
+  mainWindow.maximize();
+
   if (isDev && process.env.NODE_ENV === 'development') {
-    mainWindow.webContents.openDevTools();
-    mainWindow.maximize();
     installExtension(REACT_DEVELOPER_TOOLS)
       .then((name) => {
         console.log(`Added extension ${name}`);
@@ -39,6 +42,23 @@ function createWindow() {
   mainWindow.on('closed', () => (mainWindow = null));
 
   mainWindow.once('ready-to-show', () => {
+    // Modify the origin for all requests to the following urls.
+    const { API_HOST } = process.env;
+    const filter = {
+      urls: [`${API_HOST}/*`],
+    };
+    session.defaultSession.webRequest.onBeforeSendHeaders(filter, (details, callback) => {
+      const newDetails = {
+        ...details,
+        referrer: API_HOST,
+        requestHeaders: {
+          ...details.requestHeaders,
+          Origin: API_HOST,
+          Referer: API_HOST,
+        },
+      };
+      callback(newDetails);
+    });
     mainWindow.webContents.send('getSettings', getSettings());
   });
 }

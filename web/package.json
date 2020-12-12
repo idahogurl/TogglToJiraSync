@@ -12,7 +12,7 @@
   },
   "scripts": {
     "react-start": "parcel index.html --out-dir build",
-    "react-build-dev": "NODE_ENV=development parcel build index.html --out-dir build --public-url ./",
+    "react-build-dev": "NODE_ENV=production parcel build index.html --no-minify --out-dir build --public-url ./ --experimental-scope-hoisting",
     "react-build": "NODE_ENV=production parcel build index.html --out-dir build --public-url ./ --no-source-maps --experimental-scope-hoisting",
     "electron-build": "electron-builder -m",
     "clean-build": "rm -rf build/ .cache dist/",

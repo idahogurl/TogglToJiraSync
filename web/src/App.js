@@ -4,6 +4,7 @@ import {
 } from 'antd';
 import FilterForm from './components/FilterForm';
 import SettingsPanel from './components/SettingsPanel';
+import ErrorBoundary from './components/ErrorBoundry';
 import SettingsIcon from './settings.svg';
 import LocalStorage from './localstorage-settings-store';
 import 'antd/dist/antd.css';
@@ -37,8 +38,8 @@ export default function App() {
   };
 
   return (
-    <>
-      <Row style={{ marginTop: '1em' }}>
+    <ErrorBoundary>
+      <Row>
         <Col span={24} style={column}>
           <Space>
             <img src={logo} alt="App Logo" style={{ width: '64px' }} />
@@ -81,6 +82,6 @@ export default function App() {
           settings={settings}
         />
       </Drawer>
-    </>
+    </ErrorBoundary>
   );
 }

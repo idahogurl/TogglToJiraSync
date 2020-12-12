@@ -24,7 +24,7 @@ export default function Entries({
         }}
         description={(
           <span>
-            Select
+            Select a
             {' '}
             <strong>Date Range</strong>
             {' '}
@@ -44,9 +44,15 @@ export default function Entries({
     end_date: endDate.startOf('D').toISOString(),
   })}`;
 
+  const [syncStatus, setSyncStatus] = useState('');
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+
   const fetcher = (url) => fetch(url, {
     method: 'POST',
+    // mode: 'no-cors',
     headers: {
+      Origin: process.env.API_HOST,
+      Referer: process.env.API_HOST,
       'x-client-options': encode(JSON.stringify(settings)),
     },
   }).then((res) => res.json());
@@ -54,8 +60,6 @@ export default function Entries({
   const { data, error } = useSwr(entriesApiUrl, fetcher, {
     errorRetryCount: 2,
   });
-  const [syncStatus, setSyncStatus] = useState();
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
   let displayData = [];
 
@@ -107,6 +111,7 @@ export default function Entries({
       />
     );
   }
+
   displayData = data
     ? data.map((d) => {
       const selected = selectedRowKeys.find((s) => s === d.key);

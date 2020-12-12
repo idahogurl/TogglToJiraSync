@@ -15,6 +15,7 @@ const selectBefore = (
 );
 
 export default function SettingsScreen({ onClose, onSave, settings }) {
+  console.log('CREATE PANEL');
   return (
     <Form
       labelCol={{ span: 8 }}

@@ -189,3 +189,4 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 .next/
+web/.env.production

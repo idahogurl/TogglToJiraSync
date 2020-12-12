@@ -27,13 +27,13 @@ export default function FilterForm({ settings }) {
     wrapperCol: { span: 16 },
   };
   const tailLayout = {
-    wrapperCol: { offset: 8, span: 16 },
+    wrapperCol: { span: 24 },
   };
   /* eslint-disable react/jsx-props-no-spreading */
   return (
-    <div style={{ textAlign: 'left' }}>
+    <div>
       <Form className="filter-form" {...layout}>
-        <Form.Item label="Date Range">
+        <Form.Item label="Date Range" style={{ fontWeight: 'bold', textAlign: 'center' }}>
           <RangePicker onChange={onChange} />
         </Form.Item>
         <Form.Item {...tailLayout}>
