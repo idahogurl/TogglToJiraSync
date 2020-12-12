@@ -1,0 +1,3 @@
+[submodule "toggl-to-jira-api"]
+	path = toggl-to-jira-api
+	url = https://github.com/idahogurl/toggl-to-jira-api
