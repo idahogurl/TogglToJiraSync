@@ -1,13 +1,5 @@
 const Store = require('electron-store');
-
-const SETTINGS = {
-  TOGGL_TOKEN: 'togglToken',
-  JIRA_USERNAME: 'jiraUsername',
-  JIRA_TOKEN: 'jiraToken',
-  JIRA_HOST: 'jiraHost',
-  JIRA_PROTOCOL: 'jiraProtocol',
-  JIRA_USER: 'jiraUser',
-};
+const { SETTINGS } = require('./setting-names');
 
 const store = new Store();
 

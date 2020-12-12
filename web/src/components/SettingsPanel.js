@@ -7,7 +7,7 @@ const { Option } = Select;
 
 const selectBefore = (
   <Form.Item name="jiraProtocol" noStyle>
-    <Select className="select-before">
+    <Select className="select-before" style={{ width: 100 }}>
       <Option value="http">http://</Option>
       <Option value="https">https://</Option>
     </Select>
@@ -15,11 +15,12 @@ const selectBefore = (
 );
 
 export default function SettingsScreen({ onClose, onSave, settings }) {
+  console.log('CREATE PANEL');
   return (
     <Form
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
-      initialValues={settings || { jiraProtocol: 'https' }}
+      initialValues={{ ...settings, jiraProtocol: settings.jiraProtocol || 'https' }}
       onFinish={(values) => onSave(values)}
     >
       <h2>Toggl</h2>

@@ -1,27 +1,58 @@
 import React, { useState, useEffect } from 'react';
+import fetch from 'node-fetch';
 import useSwr, { mutate } from 'swr';
 import {
-  Table, Alert, Button, Divider,
+  Table, Alert, Button, Divider, Empty, Space,
 } from 'antd';
 import dayjs from 'dayjs';
 import querystring from 'querystring';
 import { encode } from 'base-64';
 
-import SyncResult from '../sync-result';
+import SyncResult from './SyncResult';
 import { SET_STATUS_PENDING, SET_STATUS_RESOLVED, SET_STATUS_REJECTED } from '../statuses';
 
-export default function Entries({ startDate, endDate, settings }) {
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [syncStatus, setSyncStatus] = useState();
+export default function Entries({
+  isInit, startDate, endDate, settings,
+}) {
+  if (isInit) {
+    return (
+      <Empty
+        imageStyle={{
+          border: '1px solid darkgray',
+          backgroundColor: 'white',
+          padding: 5,
+        }}
+        description={(
+          <span>
+            Select a
+            {' '}
+            <strong>Date Range</strong>
+            {' '}
+            and click
+            {' '}
+            <strong>View Entries</strong>
+            {' '}
+            for data
+          </span>
+        )}
+      />
+    );
+  }
 
   const entriesApiUrl = `${process.env.API_HOST}/api/toggl?${querystring.stringify({
-    start_date: startDate.toISOString(),
-    end_date: endDate.toISOString(),
+    start_date: startDate.startOf('D').toISOString(),
+    end_date: endDate.startOf('D').toISOString(),
   })}`;
+
+  const [syncStatus, setSyncStatus] = useState('');
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
 
   const fetcher = (url) => fetch(url, {
     method: 'POST',
+    // mode: 'no-cors',
     headers: {
+      Origin: process.env.API_HOST,
+      Referer: process.env.API_HOST,
       'x-client-options': encode(JSON.stringify(settings)),
     },
   }).then((res) => res.json());
@@ -30,17 +61,7 @@ export default function Entries({ startDate, endDate, settings }) {
     errorRetryCount: 2,
   });
 
-  const displayData = data
-    ? data.map((d) => {
-      const selected = selectedRowKeys.find((s) => s === d.key);
-      return {
-        ...d,
-        startDisplay: dayjs(d.start).format('MM-DD-YYYY hh:MM a'),
-        stopDisplay: dayjs(d.stop).format('MM-DD-YYYY hh:MM a'),
-        synced: d.synced || (syncStatus === SET_STATUS_RESOLVED && selected ? 'Yes' : undefined),
-      };
-    })
-    : [];
+  let displayData = [];
 
   useEffect(() => {
     if (syncStatus === SET_STATUS_PENDING) {
@@ -62,6 +83,9 @@ export default function Entries({ startDate, endDate, settings }) {
         try {
           await fetch(`${process.env.API_HOST}/api/jira`, {
             method: 'POST',
+            headers: {
+              'x-client-options': encode(JSON.stringify(settings)),
+            },
             // eslint-disable-next-line no-use-before-define
             body: JSON.stringify(selectedData),
           });
@@ -79,17 +103,34 @@ export default function Entries({ startDate, endDate, settings }) {
 
   if (error) {
     return (
-      <div className="container">
-        <Alert type="error" message="Failed to time entries" />
-      </div>
+      <Alert
+        type="error"
+        showIcon
+        message="Failed to Load Time Entries"
+        style={{ textAlign: 'center' }}
+      />
     );
   }
 
+  displayData = data
+    ? data.map((d) => {
+      const selected = selectedRowKeys.find((s) => s === d.key);
+      return {
+        ...d,
+        startDisplay: dayjs(d.start).format('MM-DD-YYYY hh:MM a'),
+        stopDisplay: dayjs(d.stop).format('MM-DD-YYYY hh:MM a'),
+        synced: d.synced || (syncStatus === SET_STATUS_RESOLVED && selected ? 'Yes' : undefined),
+      };
+    })
+    : [];
+
   return (
-    <>
+    <Space direction="vertical">
       <Divider>Time Entries</Divider>
       <Table
         loading={!data}
+        size="medium"
+        scroll={{ y: 240 }}
         columns={[
           {
             title: 'Synced',
@@ -108,7 +149,7 @@ export default function Entries({ startDate, endDate, settings }) {
             dataIndex: 'stopDisplay',
           },
           {
-            title: 'Duration',
+            title: 'Length',
             dataIndex: 'durationDisplay',
           },
         ]}
@@ -120,15 +161,19 @@ export default function Entries({ startDate, endDate, settings }) {
           },
         }}
       />
+
       <Button
         onClick={() => {
           setSyncStatus(SET_STATUS_PENDING);
         }}
         loading={syncStatus === SET_STATUS_PENDING}
+        disabled={!data || !data.length}
+        type="primary"
       >
         Sync
       </Button>
+
       <SyncResult status={syncStatus} />
-    </>
+    </Space>
   );
 }

@@ -20,4 +20,4 @@ Click on your profile (bottom left)
 Select "Profile Settings"
 Scroll down to find API Token
 
-Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+<a href="https://www.vecteezy.com/free-vector/365">365 Vectors by Vecteezy</a>
