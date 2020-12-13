@@ -30,58 +30,61 @@ export default function App() {
     }
   }, []);
 
-  const column = {
-    backgroundColor: 'gainsboro',
-    padding: 10,
-    border: 1,
-    textAlign: 'center',
-  };
-
   return (
-    <ErrorBoundary>
-      <Row>
-        <Col span={24} style={column}>
-          <Space>
-            <img src={logo} alt="App Logo" style={{ width: '64px' }} />
-            <h1>Toggl Tracker to Jira Sync</h1>
-            <button
-              type="button"
-              style={{ cursor: 'pointer' }}
-              onClick={() => {
-                if (ipcRenderer) {
-                  ipcRenderer.send('getSettings');
-                }
-                setShowSettings(true);
-              }}
-            >
-              <img src={SettingsIcon} alt="Open Settings" className="settings-icon" />
-            </button>
-          </Space>
-        </Col>
-      </Row>
-      <Row>
-        <Col span={24} style={column}>
-          <FilterForm settings={settings} />
-        </Col>
-      </Row>
+    <div
+      style={{
+        backgroundColor: 'gainsboro',
+        padding: 10,
+        textAlign: 'center',
+        border: '1px solid darkgray',
+        height: 690,
+      }}
+    >
+      <ErrorBoundary>
+        <Row gutter={[8, 40]}>
+          <Col span={24}>
+            <Space>
+              <img src={logo} alt="App Logo" style={{ width: '64px' }} />
+              <h1>Toggl Tracker to Jira Sync</h1>
+              <button
+                type="button"
+                style={{ cursor: 'pointer' }}
+                onClick={() => {
+                  if (ipcRenderer) {
+                    ipcRenderer.send('getSettings');
+                  }
+                  setShowSettings(true);
+                }}
+              >
+                <img src={SettingsIcon} alt="Open Settings" className="settings-icon" />
+              </button>
+            </Space>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={24}>
+            <FilterForm settings={settings} />
+          </Col>
+        </Row>
 
-      <Drawer title="Settings" width={550} closable={false} visible={showSettings}>
-        <SettingsPanel
-          onClose={() => {
-            setShowSettings(false);
-          }}
-          onSave={(values) => {
-            if (ipcRenderer) {
-              ipcRenderer.send('saveSettings', values);
-            } else {
-              LocalStorage.setSettings(values);
-            }
-            setShowSettings(false);
-            setSettingValues(values);
-          }}
-          settings={settings}
-        />
-      </Drawer>
-    </ErrorBoundary>
+        <Drawer title="Settings" width={550} closable={false} visible={showSettings}>
+          <SettingsPanel
+            onClose={() => {
+              setShowSettings(false);
+            }}
+            onSave={(values) => {
+              if (ipcRenderer) {
+                ipcRenderer.send('saveSettings', values);
+              } else {
+                LocalStorage.setSettings(values);
+              }
+              setShowSettings(false);
+              setSettingValues(values);
+            }}
+            settings={settings}
+          />
+        </Drawer>
+      </ErrorBoundary>
+    </div>
   );
 }

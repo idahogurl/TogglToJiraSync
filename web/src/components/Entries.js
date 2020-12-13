@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import fetch from 'node-fetch';
 import useSwr, { mutate } from 'swr';
 import {
-  Table, Alert, Button, Divider, Empty, Space,
+  Table, Alert, Button, Empty, Space,
 } from 'antd';
 import dayjs from 'dayjs';
 import querystring from 'querystring';
@@ -21,7 +21,9 @@ export default function Entries({
           border: '1px solid darkgray',
           backgroundColor: 'white',
           padding: 5,
+          height: 305,
         }}
+        style={{ marginTop: 35 }}
         description={(
           <span>
             Select a
@@ -126,11 +128,10 @@ export default function Entries({
 
   return (
     <Space direction="vertical">
-      <Divider>Time Entries</Divider>
       <Table
         loading={!data}
         size="medium"
-        scroll={{ y: 240 }}
+        scroll={{ y: 250 }}
         columns={[
           {
             title: 'Synced',
@@ -167,7 +168,7 @@ export default function Entries({
           setSyncStatus(SET_STATUS_PENDING);
         }}
         loading={syncStatus === SET_STATUS_PENDING}
-        disabled={!data || !data.length}
+        disabled={!selectedRowKeys.length}
         type="primary"
       >
         Sync

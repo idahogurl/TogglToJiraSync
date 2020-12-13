@@ -12,13 +12,12 @@
   },
   "scripts": {
     "react-start": "parcel index.html --out-dir build",
-    "react-build-dev": "NODE_ENV=production parcel build index.html --no-minify --out-dir build --public-url ./ --experimental-scope-hoisting",
-    "react-build": "NODE_ENV=production parcel build index.html --out-dir build --public-url ./ --no-source-maps --experimental-scope-hoisting",
+    "react-build": "yarn clean-build && NODE_ENV=production parcel build index.html --out-dir build --public-url ./ --no-source-maps --experimental-scope-hoisting",
     "electron-build": "electron-builder -m",
     "clean-build": "rm -rf build/ .cache dist/",
-    "build": "yarn clean-build && yarn react-build && yarn electron-build",
+    "build": "yarn react-build && yarn electron-build",
     "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:1234 && electron . --disable-gpu \"",
-    "debug": "DEBUG=1 yarn start"
+    "debug": "DEBUG=1 API_HOST=https://toggle-to-jira-api.idahogurl.vercel.app yarn start"
   },
   "browser": {
     "fs": false
