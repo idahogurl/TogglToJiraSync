@@ -3,7 +3,7 @@
   "productName": "Toggl to Jira Sync",
   "description": "Takes time entries from Toggl Task Timer and add them to work log of the corresponding Jira issue.",
   "version": "1.0.0",
-  "main": "src/electron.js",
+  "main": "build/electron.js",
   "license": "MIT",
   "author": {
     "name": "Rebecca Vest",
@@ -11,13 +11,14 @@
     "url": "http://codehouse.dev/"
   },
   "scripts": {
-    "react-start": "parcel index.html --out-dir build",
-    "react-build": "yarn clean-build && NODE_ENV=production parcel build index.html --out-dir build --public-url ./ --no-source-maps --experimental-scope-hoisting",
-    "electron-build": "electron-builder -m",
-    "clean-build": "rm -rf build/ .cache dist/",
-    "build": "yarn react-build && yarn electron-build",
-    "start": "concurrently \"cross-env BROWSER=none yarn react-start\" \"wait-on http://localhost:1234 && electron . --disable-gpu \"",
-    "debug": "DEBUG=1 API_HOST=https://toggle-to-jira-api.idahogurl.vercel.app yarn start"
+    "start:react": "NODE_ENV=development webpack --watch",
+    "build:react": "NODE_ENV=production webpack",
+    "build:electron": "NODE_ENV=development webpack -c webpack.electron.config.js --watch",
+    "build:electron-builder": "electron-builder -m",
+    "start:electron": "electron . --disable-gpu",
+    "build": "yarn build:react && yarn build:electron && yarn electron-builder",
+    "start": "yarn build:electron && yarn start:electron",
+    "debug": "DEBUG=1 yarn start"
   },
   "browser": {
     "fs": false
@@ -25,8 +26,6 @@
   "build": {
     "appId": "dev.rvest",
     "files": [
-      "src/*.js",
-      "src/assets/*",
       "build/**/*"
     ],
     "mac": {
@@ -45,6 +44,7 @@
   },
   "homepage": "./",
   "dependencies": {
+    "@hot-loader/react-dom": "^17.0.1",
     "antd": "^4.7.3",
     "base-64": "^1.0.0",
     "dayjs": "1.8.35",
@@ -53,17 +53,19 @@
     "electron-log": "^4.3.0",
     "electron-store": "^6.0.1",
     "node-fetch": "^2.6.1",
-    "parcel": "^1.12.4",
     "querystring": "^0.2.0",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "swr": "^0.3.6"
   },
   "devDependencies": {
     "@babel/core": "^7.12.3",
-    "concurrently": "^5.3.0",
-    "cross-env": "^7.0.2",
-    "electron": "^10.1.4",
+    "@babel/preset-env": "^7.12.10",
+    "@babel/preset-react": "^7.12.10",
+    "babel-loader": "^8.2.2",
+    "css-loader": "^5.0.1",
+    "dotenv-webpack": "^6.0.0",
+    "electron": "^11.1.0",
     "electron-builder": "^22.9.1",
     "eslint": "7.2.0",
     "eslint-config-airbnb": "18.2.0",
@@ -71,10 +73,17 @@
     "eslint-plugin-jsx-a11y": "^6.3.0",
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "parcel-bundler": "^1.12.4",
-    "parcel-plugin-less-js-enabled": "^1.0.2",
-    "parcel-plugin-svg-react": "^1.0.4",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^4.5.0",
+    "less": "^3.13.0",
+    "less-loader": "^7.1.0",
     "prettier": "^2.1.2",
-    "wait-on": "^5.2.0"
+    "react-hot-loader": "^4.13.0",
+    "style-loader": "^2.0.0",
+    "url-loader": "^4.1.1",
+    "wait-on": "^5.2.0",
+    "webpack": "^5.10.1",
+    "webpack-cli": "^4.2.0",
+    "webpack-dev-server": "^3.11.0"
   }
 }

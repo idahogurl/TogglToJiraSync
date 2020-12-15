@@ -1,14 +1,13 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-const electron = require('electron');
+import electron from 'electron';
+import path from 'path';
+import isDev from 'electron-is-dev';
+import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
+import SettingsStore from './electron-settings-store';
 
 const {
   app, session, ipcMain, BrowserWindow,
 } = electron;
-
-const path = require('path');
-const isDev = require('electron-is-dev');
-const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
-const { getSettings, setSettings } = require('./settings-store');
 
 let mainWindow;
 
@@ -43,23 +42,22 @@ function createWindow() {
 
   mainWindow.once('ready-to-show', () => {
     // Modify the origin for all requests to the following urls.
-    const { API_HOST } = process.env;
+    // eslint-disable-next-line prefer-destructuring
+    const API_HOST = process.env.API_HOST;
     const filter = {
       urls: [`${API_HOST}/*`],
     };
     session.defaultSession.webRequest.onBeforeSendHeaders(filter, (details, callback) => {
       const newDetails = {
         ...details,
-        referrer: API_HOST,
         requestHeaders: {
           ...details.requestHeaders,
           Origin: API_HOST,
-          Referer: API_HOST,
         },
       };
       callback(newDetails);
     });
-    mainWindow.webContents.send('getSettings', getSettings());
+    mainWindow.webContents.send('getSettings', SettingsStore.getSettings());
   });
 }
 
@@ -78,9 +76,9 @@ app.on('activate', () => {
 });
 
 ipcMain.on('saveSettings', (event, values) => {
-  setSettings(values);
+  SettingsStore.setSettings(values);
 });
 
 ipcMain.on('getSettings', (event) => {
-  event.reply('getSettings', getSettings());
+  event.reply('getSettings', SettingsStore.getSettings());
 });

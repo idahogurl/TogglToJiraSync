@@ -15,12 +15,13 @@ const selectBefore = (
 );
 
 export default function SettingsScreen({ onClose, onSave, settings }) {
+  const appSettings = settings || {};
   console.log('CREATE PANEL');
   return (
     <Form
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
-      initialValues={{ ...settings, jiraProtocol: settings.jiraProtocol || 'https' }}
+      initialValues={{ ...appSettings, jiraProtocol: appSettings.jiraProtocol || 'https' }}
       onFinish={(values) => onSave(values)}
     >
       <h2>Toggl</h2>
