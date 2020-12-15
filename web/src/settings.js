@@ -19,7 +19,7 @@ export default {
   },
   setSettings: function setSettings(values, setFunction) {
     Object.keys(values).forEach((v) => {
-      setFunction(SETTING_NAMES[v], values[v]);
+      setFunction(v, values[v]);
     });
   },
 };

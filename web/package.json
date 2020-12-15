@@ -12,13 +12,12 @@
   },
   "scripts": {
     "start:react": "NODE_ENV=development webpack --watch",
-    "build:react": "NODE_ENV=production webpack",
-    "build:electron": "NODE_ENV=development webpack -c webpack.electron.config.js --watch",
-    "build:electron-builder": "electron-builder -m",
+    "start:electron-watch": "NODE_ENV=development webpack -c webpack.electron.config.js --watch",
     "start:electron": "electron . --disable-gpu",
-    "build": "yarn build:react && yarn build:electron && yarn electron-builder",
-    "start": "yarn build:electron && yarn start:electron",
-    "debug": "DEBUG=1 yarn start"
+    "build:react": "NODE_ENV=production webpack",
+    "build:electron": "NODE_ENV=production webpack -c webpack.electron.config.js",
+    "build:electron-builder": "electron-builder -m",
+    "build": "yarn build:react && yarn build:electron && yarn electron-builder"
   },
   "browser": {
     "fs": false

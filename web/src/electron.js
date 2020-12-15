@@ -17,18 +17,15 @@ function createWindow() {
     height: 700,
     webPreferences: {
       enableRemoteModule: true,
-      nodeIntegration: true,
     },
   });
 
-  mainWindow.loadURL(
-    isDev ? 'http://localhost:1234' : `file://${path.join(__dirname, '../build/index.html')}`,
-  );
-
-  mainWindow.webContents.openDevTools();
-  mainWindow.maximize();
+  mainWindow.loadFile(path.join(__dirname, '../build/index.html'));
 
   if (isDev && process.env.NODE_ENV === 'development') {
+    mainWindow.webContents.openDevTools();
+    mainWindow.maximize();
+
     installExtension(REACT_DEVELOPER_TOOLS)
       .then((name) => {
         console.log(`Added extension ${name}`);
@@ -37,6 +34,7 @@ function createWindow() {
         console.log(`Error occurred: ${e.message}`);
       });
   }
+
   // eslint-disable-next-line no-return-assign
   mainWindow.on('closed', () => (mainWindow = null));
 
@@ -76,6 +74,7 @@ app.on('activate', () => {
 });
 
 ipcMain.on('saveSettings', (event, values) => {
+  console.log('saveSettings', values);
   SettingsStore.setSettings(values);
 });
 

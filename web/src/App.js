@@ -78,8 +78,8 @@ export default function App() {
               } else {
                 LocalStorage.setSettings(values);
               }
-              setShowSettings(false);
               setSettingValues(values);
+              setShowSettings(false);
             }}
             settings={settings}
           />
