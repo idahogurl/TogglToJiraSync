@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Button } from 'antd';
+import { Form, Button, Divider } from 'antd';
 import Entries from './Entries';
 import DatePicker from './DatePicker';
 
@@ -11,6 +11,7 @@ export default function FilterForm({ settings }) {
   const [isInit, setIsInit] = useState(true);
 
   const onChange = (date) => {
+    setIsInit(true);
     if (date) {
       const [start, end] = date;
       setStartDate(start);
@@ -22,26 +23,28 @@ export default function FilterForm({ settings }) {
     setIsInit(false);
   };
 
-  const layout = {
-    labelCol: { span: 8 },
-    wrapperCol: { span: 16 },
-  };
-  const tailLayout = {
-    wrapperCol: { span: 24 },
-  };
   /* eslint-disable react/jsx-props-no-spreading */
   return (
     <div>
-      <Form className="filter-form" {...layout}>
+      <Form
+        className="filter-form"
+        layout="inline"
+        style={{
+          margin: 'auto',
+          width: 550,
+          marginBottom: 40,
+        }}
+      >
         <Form.Item label="Date Range" style={{ fontWeight: 'bold', textAlign: 'center' }}>
           <RangePicker onChange={onChange} />
         </Form.Item>
-        <Form.Item {...tailLayout}>
-          <Button onClick={onClick} disabled={!startDate && !endDate} type="primary">
+        <Form.Item>
+          <Button onClick={onClick} disabled={!isInit || !startDate || !endDate} type="primary">
             View Entries
           </Button>
         </Form.Item>
       </Form>
+      <Divider>Time Entries</Divider>
       <Entries isInit={isInit} startDate={startDate} endDate={endDate} settings={settings} />
     </div>
   );

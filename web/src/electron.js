@@ -1,35 +1,31 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-const electron = require('electron');
+import electron from 'electron';
+import path from 'path';
+import isDev from 'electron-is-dev';
+import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
+import SettingsStore from './electron-settings-store';
 
 const {
   app, session, ipcMain, BrowserWindow,
 } = electron;
 
-const path = require('path');
-const isDev = require('electron-is-dev');
-const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
-const { getSettings, setSettings } = require('./settings-store');
-
 let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 580,
-    height: 650,
+    width: 700,
+    height: 700,
     webPreferences: {
       enableRemoteModule: true,
-      nodeIntegration: true,
     },
   });
 
-  mainWindow.loadURL(
-    isDev ? 'http://localhost:1234' : `file://${path.join(__dirname, '../build/index.html')}`,
-  );
-
-  mainWindow.webContents.openDevTools();
-  mainWindow.maximize();
+  mainWindow.loadFile(path.join(__dirname, '../build/index.html'));
 
   if (isDev && process.env.NODE_ENV === 'development') {
+    mainWindow.webContents.openDevTools();
+    mainWindow.maximize();
+
     installExtension(REACT_DEVELOPER_TOOLS)
       .then((name) => {
         console.log(`Added extension ${name}`);
@@ -38,28 +34,28 @@ function createWindow() {
         console.log(`Error occurred: ${e.message}`);
       });
   }
+
   // eslint-disable-next-line no-return-assign
   mainWindow.on('closed', () => (mainWindow = null));
 
   mainWindow.once('ready-to-show', () => {
     // Modify the origin for all requests to the following urls.
-    const { API_HOST } = process.env;
+    // eslint-disable-next-line prefer-destructuring
+    const API_HOST = process.env.API_HOST;
     const filter = {
       urls: [`${API_HOST}/*`],
     };
     session.defaultSession.webRequest.onBeforeSendHeaders(filter, (details, callback) => {
       const newDetails = {
         ...details,
-        referrer: API_HOST,
         requestHeaders: {
           ...details.requestHeaders,
           Origin: API_HOST,
-          Referer: API_HOST,
         },
       };
       callback(newDetails);
     });
-    mainWindow.webContents.send('getSettings', getSettings());
+    mainWindow.webContents.send('getSettings', SettingsStore.getSettings());
   });
 }
 
@@ -78,9 +74,10 @@ app.on('activate', () => {
 });
 
 ipcMain.on('saveSettings', (event, values) => {
-  setSettings(values);
+  console.log('saveSettings', values);
+  SettingsStore.setSettings(values);
 });
 
 ipcMain.on('getSettings', (event) => {
-  event.reply('getSettings', getSettings());
+  event.reply('getSettings', SettingsStore.getSettings());
 });
