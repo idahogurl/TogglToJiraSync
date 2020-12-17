@@ -45,7 +45,7 @@ export default function App() {
           <Col span={24}>
             <Space>
               <img src={logo} alt="App Logo" style={{ width: '64px' }} />
-              <h1>Toggl Tracker to Jira Sync</h1>
+              <h1>Toggl Worklog</h1>
               <button
                 type="button"
                 style={{ cursor: 'pointer' }}
