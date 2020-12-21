@@ -3,12 +3,33 @@
     padding: 1em;
     margin-bottom: 1em;
 }
+.sider, .ant-menu-vertical {
+    background-color: lightsteelblue;
+}
+.sider {
+    padding-top: 10px;
+    text-align: center; 
+}
+.ant-menu-vertical {
+    box-shadow: none;
+    text-align: center;
+    border: none;
+}
+.ant-menu-item-selected {
+    background-color: transparent !important;
+}
 .filter-form {
     margin-bottom: 3em;
 }
 .settings-icon {
     width: 16px;
     height: 16px;
+    display: 'inline-block';
+}
+.app-logo {
+    width: 48px; 
+    margin-bottom: 10px; 
+    display: 'inline-block';
 }
 button {
     cursor: 'pointer'

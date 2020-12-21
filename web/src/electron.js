@@ -13,7 +13,7 @@ let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 700,
+    width: 750,
     height: 700,
     webPreferences: {
       enableRemoteModule: true,

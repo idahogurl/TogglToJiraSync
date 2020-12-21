@@ -1,6 +1,6 @@
 {
   "name": "toggl-to-jira-sync",
-  "productName": "Toggl to Jira Sync",
+  "productName": "Jira Worklogs",
   "description": "Takes time entries from Toggl Task Timer and add them to work log of the corresponding Jira issue.",
   "version": "1.0.0",
   "main": "build/electron.js",
