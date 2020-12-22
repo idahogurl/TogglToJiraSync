@@ -32,7 +32,7 @@ export default function App() {
 
   return (
     <ErrorBoundary>
-      <Layout hasSider>
+      <Layout style={{ height: '100vh' }} hasSider>
         <Sider width={64} className="sider">
           <img src={logo} alt="App Logo" className="app-logo" />
           <Menu
