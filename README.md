@@ -16,13 +16,13 @@
 
 2. Click on your profile (bottom left)
 
-![enter image description here](https://github.com/idahogurl/TogglToJiraSync/raw/master/web/images/toggl-profile-menu.png)
+![](https://github.com/idahogurl/TogglToJiraSync/raw/master/web/images/toggl-profile-menu.png)
 
 3. Click `Profile Settings`
 
 4. Scroll down to find `API Token`
 
-![enter image description here](https://github.com/idahogurl/TogglToJiraSync/raw/master/web/images/toggl-api-token.png)
+![](https://github.com/idahogurl/TogglToJiraSync/raw/master/web/images/toggl-api-token.png)
 
 5. Copy and paste this value to safe location
 
@@ -38,46 +38,46 @@
 
 1. Click on your profile (top right)
 
-![enter image description here](https://github.com/idahogurl/TogglToJiraSync/raw/master/web/images/jira-profile-menu.png)
+![](https://github.com/idahogurl/TogglToJiraSync/raw/master/web/images/jira-profile-menu.png)
 
 2. Click `Account settings`
 
 3. Click `Security` 
 
-![enter image description here](https://github.com/idahogurl/TogglToJiraSync/raw/master/web/images/jira-profile-settings-sidebar.png)
+![](https://github.com/idahogurl/TogglToJiraSync/raw/master/web/images/jira-profile-settings-sidebar.png)
 
 4. Click `Create and manage API tokens` (last section)
 
-![enter image description here](https://github.com/idahogurl/TogglToJiraSync/raw/master/web/images/jira-security-settings.png)
+![](https://github.com/idahogurl/TogglToJiraSync/raw/master/web/images/jira-security-settings.png)
 
 5. Click `Create API Token`
 
-![enter image description here](https://github.com/idahogurl/TogglToJiraSync/raw/master/web/images/jira-token-create-1.png)
+![](https://github.com/idahogurl/TogglToJiraSync/raw/master/web/images/jira-token-create-1.png)
 
 6.Enter a value to label the token (Example: *Toggl-To-Jira*)
 
-![enter image description here](https://github.com/idahogurl/TogglToJiraSync/raw/master/web/images/jira-token-create-2.png)
+![](https://github.com/idahogurl/TogglToJiraSync/raw/master/web/images/jira-token-create-2.png)
 
 7. Click `Create`
 
-![enter image description here](https://github.com/idahogurl/TogglToJiraSync/raw/master/web/images/jira-token-create-3.png)
+![](https://github.com/idahogurl/TogglToJiraSync/raw/master/web/images/jira-token-create-3.png)
 
 8. Copy this value to safe location
 
 ### Jira Worklogs
 1. After installation, open `Jira Worklogs`
 
-![enter image description here](https://github.com/idahogurl/TogglToJiraSync/raw/master/web/images/initial-screen.png)
+![](https://github.com/idahogurl/TogglToJiraSync/raw/master/web/images/initial-screen.png)
 
 2. Click the `Settings` icon in the left side menu to open the settings panel
 
-![enter image description here](https://github.com/idahogurl/TogglToJiraSync/raw/master/web/images/settings-panel.png)
+![](https://github.com/idahogurl/TogglToJiraSync/raw/master/web/images/settings-panel.png)
 
 3.  Copy and paste the API tokens you obtained from `Toggl` and `Jira`
 
 4.  Enter the name shown in the Jira profile menu for the `User Display Name`
 
-![enter image description here](https://github.com/idahogurl/TogglToJiraSync/raw/master/web/images/jira-display-name.png)
+![](https://github.com/idahogurl/TogglToJiraSync/raw/master/web/images/jira-display-name.png)
 
 5. Click `Save`
 
@@ -98,6 +98,7 @@ The input and button locations are dependant on the `Toggl Track` app you choose
 
 
 ![Toggl for MacOs screenshot](https://github.com/idahogurl/TogglToJiraSync/raw/master/web/images/toggl-track.png)
+
 _Screenshot of Toggl for MacOS_
 
 ### Jira Worklogs
@@ -106,18 +107,18 @@ _Screenshot of Toggl for MacOS_
   
  2. Click on one date for the `Start date` and then later date for the `End date`.  You can manually enter the dates (`YYYY-MM-DD`) instead.
 
-![enter image description here](https://github.com/idahogurl/TogglToJiraSync/raw/master/web/images/date-range-pick.png)
+![](https://github.com/idahogurl/TogglToJiraSync/raw/master/web/images/date-range-pick.png)
 
 
 3. Click `View Entries` 
 
 4. If you get an error, first check you have entered the correct setting values. Most likely your Jira connection settings are incorrect. Contact your Jira administrator for help. 
 
-![enter image description here](https://github.com/idahogurl/TogglToJiraSync/raw/master/web/images/error-screen.png)
+![](https://github.com/idahogurl/TogglToJiraSync/raw/master/web/images/error-screen.png)
 
 5. If any entries in `Toggl` exist for that date range, you will see a list of entries.
  
-![enter image description here](https://github.com/idahogurl/TogglToJiraSync/raw/master/web/images/time-entries.png)
+![](https://github.com/idahogurl/TogglToJiraSync/raw/master/web/images/time-entries.png)
 
 6. Entries already saved in Jira will have the `Sync` field show `Yes`
 

@@ -188,5 +188,26 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+
+
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+
+# misc
+.DS_Store
+
+# debug
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env.local
+.env.production
+.env
+
+/dist
+/build
+/.cache
 .next/
-web/.env.production
