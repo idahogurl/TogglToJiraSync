@@ -1,5 +1,5 @@
 
-# Toggl Worklog
+# Jira Worklogs
 
  Takes time entries from [Toggl Track](https://toggl.com/track/) (Task Timer) and adds a corresponding work log in the matching [Jira](https://www.atlassian.com/software/jira) issue.
 
