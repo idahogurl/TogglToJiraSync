@@ -46,12 +46,16 @@ export default function Entries({
     end_date: endDate.startOf('D').toISOString(),
   })}`;
 
-  const [syncStatus, setSyncStatus] = useState('');
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  const [appState, setAppState] = useState({
+    syncStatus: '',
+    syncFailedIssues: [],
+    selectedRowKeys: [],
+  });
+
+  const { syncFailedIssues, syncStatus, selectedRowKeys } = appState;
 
   const fetcher = (url) => fetch(url, {
     method: 'POST',
-    // mode: 'no-cors',
     headers: {
       Origin: process.env.API_HOST,
       Referer: process.env.API_HOST,
@@ -83,25 +87,27 @@ export default function Entries({
       mutate(entriesApiUrl, displayData, false);
       (async () => {
         try {
-          await fetch(`${process.env.API_HOST}/api/jira`, {
+          const { failedIssues } = await fetch(`${process.env.API_HOST}/api/jira`, {
             method: 'POST',
             headers: {
               'x-client-options': encode(JSON.stringify(settings)),
             },
-            // eslint-disable-next-line no-use-before-define
             body: JSON.stringify(selectedData),
+          }).then((res) => res.json());
+          setAppState({
+            syncFailedIssues: failedIssues,
+            syncStatus: SET_STATUS_RESOLVED,
+            selectedRowKeys: [],
           });
-          setSyncStatus(SET_STATUS_RESOLVED);
-          setSelectedRowKeys([]);
         } catch (e) {
           console.error(e);
-          setSyncStatus(SET_STATUS_REJECTED);
+          setAppState({ ...appState, syncStatus: SET_STATUS_REJECTED });
         }
         // trigger a revalidation (refetch) to make sure our local data is correct
         mutate(entriesApiUrl);
       })();
     }
-  }, [syncStatus]);
+  }, [appState]);
 
   if (error) {
     return (
@@ -116,12 +122,16 @@ export default function Entries({
 
   displayData = data
     ? data.map((d) => {
-      const selected = selectedRowKeys.find((s) => s === d.key);
+      let { synced } = d;
+      if (syncFailedIssues.length) {
+        const didFail = syncFailedIssues.find((s) => s === d.description);
+        synced = syncStatus === SET_STATUS_RESOLVED && didFail ? 'Issue Not Found' : 'Yes';
+      }
       return {
         ...d,
         startDisplay: dayjs(d.start).format('MM-DD-YYYY hh:MM a'),
         stopDisplay: dayjs(d.stop).format('MM-DD-YYYY hh:MM a'),
-        synced: d.synced || (syncStatus === SET_STATUS_RESOLVED && selected ? 'Yes' : undefined),
+        synced,
       };
     })
     : [];
@@ -158,14 +168,14 @@ export default function Entries({
         rowSelection={{
           selectedRowKeys,
           onChange: (selected) => {
-            setSelectedRowKeys(selected);
+            setAppState({ ...appState, selectedRowKeys: selected });
           },
         }}
       />
 
       <Button
         onClick={() => {
-          setSyncStatus(SET_STATUS_PENDING);
+          setAppState({ ...appState, syncStatus: SET_STATUS_PENDING });
         }}
         loading={syncStatus === SET_STATUS_PENDING}
         disabled={!selectedRowKeys.length}
