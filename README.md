@@ -1,5 +1,5 @@
 
-# Jira Worklogs
+# Joggl Track
 
  Takes time entries from [Toggl Track](https://toggl.com/track/) (Task Timer) and adds a corresponding work log in the matching [Jira](https://www.atlassian.com/software/jira) issue.
 
@@ -64,8 +64,8 @@
 
 8. Copy this value to safe location
 
-### Jira Worklogs
-1. After installation, open `Jira Worklogs`
+### Joggl Track
+1. After installation, open `Joggl Track`
 
 ![](https://github.com/idahogurl/TogglToJiraSync/raw/master/web/images/initial-screen.png)
 
@@ -88,7 +88,7 @@ The input and button locations are dependant on the `Toggl Track` app you choose
 
 1. When you begin work on a Jira issue, open your `Toggl Track` app.
 
-2. Enter the `Jira issue key` as the entry title. Without this value `Jira Worklogs` will not work properly.
+2. Enter the `Jira issue key` as the entry title. Without this value `Joggl Track` will not work properly.
 
 3. Click the `Start` button (arrow icon) 
 
@@ -101,7 +101,7 @@ The input and button locations are dependant on the `Toggl Track` app you choose
 
 _Screenshot of Toggl for MacOS_
 
-### Jira Worklogs
+### Joggl Track
 
  1. Once you save the settings, click on the `Date Range` input.
   

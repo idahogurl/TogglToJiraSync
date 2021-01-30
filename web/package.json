@@ -1,7 +1,7 @@
 {
   "name": "toggl-to-jira-sync",
-  "productName": "Jira Worklogs",
-  "description": "Takes time entries from Toggl Task Timer and add them to work log of the corresponding Jira issue.",
+  "productName": "Joggl Track",
+  "description": "Takes time entries from Toggl Task and add them to work log of the corresponding Jira issue.",
   "version": "1.0.0",
   "main": "build/electron.js",
   "license": "MIT",

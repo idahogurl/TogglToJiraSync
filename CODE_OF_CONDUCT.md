@@ -1,4 +1,4 @@
-# Code of Conduct - Jira Worklogs
+# Code of Conduct - Joggl Track
 
 ## Our Pledge
 
