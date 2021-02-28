@@ -19,6 +19,7 @@ const config = {
       },
     ],
   },
+  devtool: 'inline-source-map',
   plugins: [
     new Dotenv({ path: process.env.NODE_ENV === 'development' ? '.env.local' : '.env.production' }),
   ],

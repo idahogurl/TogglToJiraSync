@@ -61,6 +61,7 @@ const config = {
   devServer: {
     contentBase: './dist',
   },
+  devtool: 'inline-source-map',
   plugins: [
     new HtmlWebpackPlugin({
       template: 'src/index.html',

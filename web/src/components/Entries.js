@@ -1,3 +1,4 @@
+/* global Rollbar */
 import React, { useState, useEffect } from 'react';
 import fetch from 'node-fetch';
 import useSwr, { mutate } from 'swr';
@@ -94,6 +95,10 @@ export default function Entries({
           setSyncStatus(SET_STATUS_RESOLVED);
           setSelectedRowKeys([]);
         } catch (e) {
+          if (process.env.NODE_ENV === 'production') {
+            Rollbar.error(e);
+          }
+
           console.error(e);
           setSyncStatus(SET_STATUS_REJECTED);
         }
@@ -104,24 +109,24 @@ export default function Entries({
   }, [syncStatus]);
 
   if (error) {
-    return (
-      <Alert
-        type="error"
-        showIcon
-        message="Failed to Load Time Entries"
-        style={{ textAlign: 'center' }}
-      />
-    );
+    return <Alert type="error" showIcon message="Load Failure" style={{ textAlign: 'center' }} />;
   }
 
   displayData = data
     ? data.map((d) => {
       const selected = selectedRowKeys.find((s) => s === d.key);
+      let { synced } = d;
+      if (syncStatus === SET_STATUS_RESOLVED && selected) {
+        synced = 'Yes';
+      }
+      if (syncStatus === SET_STATUS_REJECTED && selected) {
+        synced = 'Failed';
+      }
       return {
         ...d,
         startDisplay: dayjs(d.start).format('MM-DD-YYYY hh:MM a'),
         stopDisplay: dayjs(d.stop).format('MM-DD-YYYY hh:MM a'),
-        synced: d.synced || (syncStatus === SET_STATUS_RESOLVED && selected ? 'Yes' : undefined),
+        synced,
       };
     })
     : [];

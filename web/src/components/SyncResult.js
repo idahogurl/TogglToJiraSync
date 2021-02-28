@@ -4,6 +4,7 @@ import { Result } from 'antd';
 import { SET_STATUS_RESOLVED, SET_STATUS_REJECTED } from '../statuses';
 
 export default function SyncResult(status) {
+  return <Result status="success" title="Sync Succeeded" />;
   if (status === SET_STATUS_RESOLVED) {
     return <Result status="success" title="Sync Succeeded" />;
   }
