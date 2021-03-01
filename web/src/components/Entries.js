@@ -81,29 +81,29 @@ export default function Entries({
       });
 
       // update the local data immediately, but disable the revalidation
-      mutate(entriesApiUrl, displayData, false);
+      // mutate(entriesApiUrl, displayData);
       (async () => {
-        try {
-          await fetch(`${process.env.API_HOST}/api/jira`, {
-            method: 'POST',
-            headers: {
-              'x-client-options': encode(JSON.stringify(settings)),
-            },
-            // eslint-disable-next-line no-use-before-define
-            body: JSON.stringify(selectedData),
-          });
-          setSyncStatus(SET_STATUS_RESOLVED);
-          setSelectedRowKeys([]);
-        } catch (e) {
-          if (process.env.NODE_ENV === 'production') {
-            Rollbar.error(e);
-          }
+        // try {
+        //   await fetch(`${process.env.API_HOST}/api/jira`, {
+        //     method: 'POST',
+        //     headers: {
+        //       'x-client-options': encode(JSON.stringify(settings)),
+        //     },
+        //     // eslint-disable-next-line no-use-before-define
+        //     body: JSON.stringify(selectedData),
+        //   });
+        //   setSyncStatus(SET_STATUS_RESOLVED);
+        //   setSelectedRowKeys([]);
+        // } catch (e) {
+        //   if (process.env.NODE_ENV === 'production') {
+        //     Rollbar.error(e);
+        //   }
 
-          console.error(e);
-          setSyncStatus(SET_STATUS_REJECTED);
-        }
+        //   console.error(e);
+        setSyncStatus(SET_STATUS_REJECTED);
+        // }
         // trigger a revalidation (refetch) to make sure our local data is correct
-        mutate(entriesApiUrl);
+        // mutate(entriesApiUrl);
       })();
     }
   }, [syncStatus]);

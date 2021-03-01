@@ -13,7 +13,7 @@
   "scripts": {
     "start:react": "NODE_ENV=development webpack --watch",
     "start:electron-watch": "NODE_ENV=development webpack -c webpack.electron.config.js --watch",
-    "start:electron": "DEBUG=1 electron . --disable-gpu",
+    "start:electron": "NODE_ENV=development electron . --disable-gpu",
     "build:react": "NODE_ENV=production webpack",
     "build:electron": "NODE_ENV=production webpack -c webpack.electron.config.js",
     "build:electron-builder": "electron-builder -m",
