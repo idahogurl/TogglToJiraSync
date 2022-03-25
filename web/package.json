@@ -64,7 +64,7 @@
     "babel-loader": "^8.2.2",
     "css-loader": "^5.0.1",
     "dotenv-webpack": "^6.0.0",
-    "electron": "^11.1.0",
+    "electron": "^13.6.6",
     "electron-builder": "^22.9.1",
     "eslint": "7.2.0",
     "eslint-config-airbnb": "18.2.0",
